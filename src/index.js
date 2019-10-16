@@ -138,17 +138,9 @@ export const newObject = (obj,...src)=>Object.assign(stripObject(obj),...src);
 
 export const newImmerObject = produce((draft,...src)=>Object.assign(draft,...src));
 
-export const stripObject = (obj,...excludedProps)=>{
+export const stripObject = (obj,...excludedProps)=>
+  Object.assign({},
+    Object.keys(obj).filter((p)=>excludedProps.includes(p)).map((p)=>({[p]:obj[p]}))
+  );
 
-  return Object.keys(obj).reduce((ob,key)=>(excludedProps.find((k)=>k===key))?ob:Object.assign(ob,{[key]:obj[key]}),{});
-
-};
-
-export const log = (effect, message) => {
-  console.log(message);
-  return effect
-};
-
-export const doTakeEvery = (sagaFns)=>{
-  return Object.keys(sagaFns).map((key)=>reduxTakeEvery(key,sagaFns[key]))
-};
+export const doTakeEvery = (sagaFns)=>Object.keys(sagaFns).map((key)=>reduxTakeEvery(key,sagaFns[key]));
