@@ -110,7 +110,13 @@ const convertReduceFn = (key,rawFn) => {
       return rawFn;
 
     case 'string':
-      if(rawFn.startsWith('set')) {
+      if(rawFn.trim().startsWith('setAll')){
+
+
+        return ({state,action})=>(Object.assign(state,stripObject(action,"type","subType","reduceFn","paramFn")));
+
+
+      } else if(rawFn.trim().startsWith('set')) {
 
         const valueKey = rawFn.split(' ')[1] || key.slice(3,4).toLowerCase()+key.slice(4);
         //console.log(`valueKey=${valueKey}`);
@@ -126,7 +132,15 @@ const convertReduceFn = (key,rawFn) => {
 
 };
 
-export const newObject = produce((draft,...src)=>Object.assign(draft,...src));
+export const newObject = (obj,src)=>Object.assign(stripObject(obj),...src);
+
+export const newImmerObject = produce((draft,...src)=>Object.assign(draft,...src));
+
+export const stripObject = (obj,...excludedProps)=>{
+
+  return Object.keys(obj).reduce((ob,key)=>(excludedProps.find((k)=>k===key))?ob:Object.assign(ob,{[key]:obj[key]}),{});
+
+};
 
 export const log = (effect, message) => {
   console.log(message);
