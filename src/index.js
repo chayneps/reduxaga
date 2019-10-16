@@ -57,6 +57,8 @@ export const createActions = ({nameSpace,actions,initState,reduceFn})=>{
       {}
     );
 
+  actGens.takeEvery = ()=>doTakeEvery(actGens.sagaFns);
+
   actGens.nameSpace = nameSpace;
   actGens.initState = initState;
   actGens.reselector = createSelector(  (state)=>state[nameSpace.toLowerCase()],
