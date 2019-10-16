@@ -4,6 +4,11 @@ import { createSelector } from 'reselect';
 
 export const createActions = ({nameSpace,actions,initState,reduceFn})=>{
 
+  if(!nameSpace || typeof nameSpace !== 'string')
+    throw "NameSpace is blank";
+
+  nameSpace = nameSpace.toUpperCase();
+
   console.log("Create action generator: "+ nameSpace);
 
   const actGens = Object.keys(actions)
