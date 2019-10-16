@@ -132,7 +132,7 @@ const convertReduceFn = (key,rawFn) => {
 
 };
 
-export const newObject = (obj,src)=>Object.assign(stripObject(obj),...src);
+export const newObject = (obj,...src)=>Object.assign(stripObject(obj),...src);
 
 export const newImmerObject = produce((draft,...src)=>Object.assign(draft,...src));
 
