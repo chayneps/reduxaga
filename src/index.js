@@ -140,7 +140,7 @@ export const newImmerObject = produce((draft,...src)=>Object.assign(draft,...src
 
 export const stripObject = (obj,...excludedProps)=>
   Object.assign({},
-    Object.keys(obj).filter((p)=>excludedProps.includes(p)).map((p)=>({[p]:obj[p]}))
+    ...Object.keys(obj).filter((p)=>excludedProps.includes(p)).map((p)=>({[p]:obj[p]}))
   );
 
 export const doTakeEvery = (sagaFns)=>Object.keys(sagaFns).map((key)=>reduxTakeEvery(key,sagaFns[key]));
