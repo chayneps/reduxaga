@@ -54,7 +54,11 @@ const pathActions =  createActions({
   },
 
   initState: {
-    doingLogin: false
+    doingLogin: false,
+    loginCred:{
+      accessToken: undefined,
+      expired: undefined
+    }
   }
 
 });
@@ -72,6 +76,16 @@ dispatch(pathActions.doneLogin({doingLogin: false});
 dispatch(pathActions.setAll({doingLogin:true, anyOtherProp: "AnyThing"});
 
 dispatch(pathActions.setAll({reduceFn:({state,action})=>{state.doingLogin:undefined}})); // reduceFn can be sent with actions
+
+```
+
+#### Selectors
+```javascript
+import {useSelector} from 'react-redux'
+
+let doingLogin = useSelector(pathActions.selector((state)=state.doingLogin)); // Only select state on the 'path' branch
+let doingLogin2 = useSelector(pathActions.selector("doingLogin"); // Select path.doingLogin 
+let doingLogin3 = useSelector(pathActions.selector("loginCred","accessToken")); Select path.doingLogin.accessToken
 
 ```
 
