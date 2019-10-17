@@ -47,7 +47,7 @@ const pathActions =  createActions({
 
     init: {
 
-      reduceFn: ({initState}=>initState)
+      reduceFn: ({initState})=>initState
 
     }
 
