@@ -7,7 +7,7 @@ export const createActions = ({nameSpace,actions,initState,reduceFn})=>{
   if(!nameSpace || typeof nameSpace !== 'string')
     throw "NameSpace is blank";
 
-  nameSpace = nameSpace.toUpperCase();
+  nameSpace = nameSpace.trim().toUpperCase();
 
   console.log("Create action generator: "+ nameSpace);
 
@@ -89,8 +89,8 @@ export const createActions = ({nameSpace,actions,initState,reduceFn})=>{
     //console.log(`action=${action.type} immutable=${isImmutable(action)}`)
 
 
-    if ((action.type === undefined)
-      || !action.type.startsWith(actGens.nameSpace + ":"))
+    if ((typeof action.type !== "string")
+      || action.type.substring(0,actGens.nameSpace.length)!==actGens.nameSpace)
       return state;
 
     //console.log(`Calling reduceFn ${action['type']}`);
