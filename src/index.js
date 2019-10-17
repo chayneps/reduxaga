@@ -90,6 +90,7 @@ export const createActions = ({nameSpace,actions,initState,reduceFn})=>{
 
 
     if ((typeof action.type !== "string")
+      || action.type[actGens.nameSpace.length-1]!==':'
       || action.type.substring(0,actGens.nameSpace.length)!==actGens.nameSpace)
       return state;
 
