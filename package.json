@@ -1,11 +1,26 @@
 {
   "name": "reduxaga",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "main": "src/index.js",
   "private": false,
   "dependencies": {
     "redux-saga": "^1.0.5",
     "immer": "^4.0.1",
     "reselect": "^4.0.0"
-  }
+  },
+  "description": "Boilerplate for React with Redux Saga Immer Reselect.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csnamchaiskul/reduxaga.git"
+  },
+  "keywords": ["redux","saga","immer","reselect"],
+  "author": "Chayne P. Snamchaiskul",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/csnamchaiskul/reduxaga/issues"
+  },
+  "homepage": "https://github.com/csnamchaiskul/reduxaga#readme"
 }
