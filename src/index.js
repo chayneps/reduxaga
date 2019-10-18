@@ -2,7 +2,9 @@ import produce from "immer";
 import { takeEvery as reduxTakeEvery } from 'redux-saga/effects';
 import { createSelector } from 'reselect';
 
-export const createActions = ({nameSpace,actions,initState,reduceFn})=>{
+export const createActions = ({nameSpace,actions,initState,reduceFn,delimiter})=>{
+
+  delimiter = ((delimiter && delimiter.trim())? delimiter.trim() : undefined) || ':';
 
   if(!nameSpace || typeof nameSpace !== 'string')
     throw "NameSpace is blank";
@@ -32,7 +34,7 @@ export const createActions = ({nameSpace,actions,initState,reduceFn})=>{
               };
 
               gen.nameSpace= nameSpace;
-              gen.type = nameSpace+':'+subType;
+              gen.type = nameSpace+delimiter+subType;
               gen.reduceFn = convertReduceFn(subType,reduceFn);
               gen.sagaFn = sagaFn;
               return gen;
@@ -90,7 +92,7 @@ export const createActions = ({nameSpace,actions,initState,reduceFn})=>{
 
 
     if ((typeof action.type !== "string")
-      || action.type[actGens.nameSpace.length]!==':'
+      || action.type[actGens.nameSpace.length]!==delimiter
       || action.type.substring(0,actGens.nameSpace.length)!==actGens.nameSpace)
       return state;
 
