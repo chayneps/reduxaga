@@ -9,7 +9,7 @@ export const createActions = ({nameSpace,actions,initState,reduceFn,delimiter})=
   if(!nameSpace || typeof nameSpace !== 'string')
     throw "NameSpace is blank";
 
-  nameSpace = nameSpace.trim().toUpperCase();
+  //nameSpace = nameSpace.trim().toUpperCase();
 
   console.log("Create action generator: "+ nameSpace);
 
@@ -64,7 +64,7 @@ export const createActions = ({nameSpace,actions,initState,reduceFn,delimiter})=
 
   actGens.nameSpace = nameSpace;
   actGens.initState = initState;
-  actGens.reselector = createSelector(  (state)=>state[nameSpace.toLowerCase()],
+  actGens.reselector = createSelector(  (state)=>state[nameSpace],
                                         state=>state);
   actGens.selector = (...selectors)=>{
 
