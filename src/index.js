@@ -16,7 +16,7 @@ export const createActions = ({nameSpace,actions,initState,reduceFn,delimiter})=
   const actGens = Object.keys(actions)
       .map((k)=>Object.assign(actions[k],{subType:k}))
       .reduce(
-        (acc,{subType,paramsFn,reduceFn,sagaFn})=>
+        (acc,{subType,paramsFn,reduceFn,sagaFn,route})=>
           Object.assign(acc,
             { [subType]: (()=>{
 
@@ -37,6 +37,7 @@ export const createActions = ({nameSpace,actions,initState,reduceFn,delimiter})=
               gen.type = nameSpace+delimiter+subType;
               gen.reduceFn = convertReduceFn(subType,reduceFn);
               gen.sagaFn = sagaFn;
+              gen.route = route;
               return gen;
             })()
           }
@@ -86,23 +87,33 @@ export const createActions = ({nameSpace,actions,initState,reduceFn,delimiter})=
         'state')));
 
   };
+
   actGens.reducer = produce((state, action) => {
-
-    //console.log(`action=${action.type} immutable=${isImmutable(action)}`)
-
 
     if ((typeof action.type !== "string")
       || action.type[actGens.nameSpace.length]!==delimiter
       || action.type.substring(0,actGens.nameSpace.length)!==actGens.nameSpace)
       return state;
 
-    //console.log(`Calling reduceFn ${action['type']}`);
     const selectedReduceFn = typeof action.reduceFn === 'function' ?
       action.reduceFn : (typeof reduceFn === 'function'? reduceFn: actGens.reduceFns[action.type]);
 
     return (selectedReduceFn)? selectedReduceFn({state, action, initState}) || state: state ;
 
   }, actGens.initState);
+
+  actGens.routerConfig =  Object.values(actGens)
+    .reduce(
+      (acc,gen)=>((gen && typeof gen.route==='object' && gen.route['path'])?
+        Object.assign(acc,{ [gen.type] :
+          gen.route }):acc),
+      {}
+    );
+
+  actGens.routesMap =  Object.keys(actGens.routerConfig)
+    .reduce((rootMap,i)=>Object.assign(rootMap,{[i]:actGens.routerConfig[i]['path']}),{});
+
+  actGens.getTargetContainer = (type)=> (actGens.routerConfig)? actGens.routerConfig[type]['container']:undefined;
 
   return actGens;
 
