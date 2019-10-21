@@ -113,8 +113,13 @@ export const createActions = ({nameSpace,actions,initState,reduceFn,delimiter})=
   actGens.routesMap =  Object.keys(actGens.routerConfig)
     .reduce((rootMap,i)=>Object.assign(rootMap,{[i]:actGens.routerConfig[i]['path']}),{});
 
-  actGens.getTargetContainer = (type)=> (actGens.routerConfig && actGens.routerConfig[type])?
-                                  actGens.routerConfig[type]['container']:undefined;
+  actGens.getTargetContainer = (type)=> (actGens.routerConfig)?
+          (actGens.routerConfig[type])?
+            actGens.routerConfig[type]['container'] :
+            (actGens.routerConfig[actGens.nameSpace+delimiter+'NOT_FOUND'])?
+              actGens.routerConfig[actGens.nameSpace+delimiter+'NOT_FOUND']['container'] :
+              undefined :
+          undefined;
 
   return actGens;
 
