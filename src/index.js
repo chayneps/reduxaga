@@ -104,7 +104,7 @@ export const createActions = ({nameSpace,actions,initState,reduceFn,delimiter})=
 
   actGens.routerConfig =  Object.values(actGens)
     .reduce(
-      (acc,gen)=>((gen && typeof gen.route==='object' && gen.route['path'])?
+      (acc,gen)=>((gen && typeof gen.route==='object' && gen.route['container'])?
         Object.assign(acc,{ [gen.type] :
           gen.route }):acc),
       {}
