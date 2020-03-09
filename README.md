@@ -3,6 +3,8 @@ Boilerplate for React with Redux Saga Immer Reselect.
 
 Code action generators, reducers, sagas in the same file. The reducers are Immerization and the selectors are Reselectization.
 
+Example project-> [decima](https://github.com/csnamchaiskul/decima)
+
 #### actions/path.js
 ```javascript
 import {createActions} from 'reduxaga';
